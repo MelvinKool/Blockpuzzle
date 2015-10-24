@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
 
 public class BlockPuzzleFrame extends JFrame{
 	public BlockPuzzleFrame(){
+		System.out.println("Building gui...");
 		//activate controller
 		BlockPuzzleController controller = new BlockPuzzleController();
 		//layout
@@ -45,24 +46,24 @@ public class BlockPuzzleFrame extends JFrame{
 		JButton pauseBtn = new JButton("Pause");
 		controlPanel.add(pauseBtn);
 		
-		mainPanel.add(controlPanel, BorderLayout.CENTER);
+//		mainPanel.add(controlPanel, BorderLayout.CENTER);
 		
-		JPanel consolePanel = new JPanel();
-		consolePanel.setLayout(new BoxLayout(consolePanel,BoxLayout.Y_AXIS));
-		JButton collapseBtn = new JButton("Show console");
-		consolePanel.add(collapseBtn);
-		JTextArea console = new JTextArea();
+//		JPanel consolePanel = new JPanel();
+//		consolePanel.setLayout(new BoxLayout(consolePanel,BoxLayout.Y_AXIS));
+//		JButton collapseBtn = new JButton("Show console");
+//		consolePanel.add(collapseBtn);
+//		JTextArea console = new JTextArea();
 		
 		/*            Built-in console               */
 		///////////////////////////////////////////////
-		PrintStream con=new PrintStream(new Console(console));
-		System.setOut(con);
-		System.setErr(con);
+//		PrintStream con=new PrintStream(new Console(console));
+//		System.setOut(con);
+//		System.setErr(con);
 		///////////////////////////////////////////////
-		JScrollPane scroll = new JScrollPane (console, 
-				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		consolePanel.add(console);
-		mainPanel.add(consolePanel,BorderLayout.SOUTH);
+//		JScrollPane scroll = new JScrollPane (console, 
+//				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+//		consolePanel.add(console);
+//		mainPanel.add(consolePanel,BorderLayout.SOUTH);
 		//add the panel to the JFrame
 		this.add(mainPanel);
 //		System.out.println("Testdasf");
