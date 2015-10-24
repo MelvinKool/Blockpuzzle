@@ -20,7 +20,7 @@ public class BlockPuzzleFrame extends JFrame{
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
-		JPanel solvingPanel = new BlockPuzzlePanel(800,7);
+		JPanel solvingPanel = new BlockPuzzleBoard(800,7);
 //		solvingPanel.setSize(350,350);
 		String[] test = {"item1","item2"};
 		JList<String> solutionList = new JList(test);
@@ -39,26 +39,6 @@ public class BlockPuzzleFrame extends JFrame{
 		this.add(controlPanel,BorderLayout.SOUTH);
 //		this.pack();
 		this.setSize(1000, 700);
-	}
-}
-
-class BlockPuzzlePanel extends JPanel{
-	private final int PANELSIZE;
-	private final int AMOUNT_BLOCKS;
-	private final int CELLSIZE;
-	
-	public BlockPuzzlePanel(int panelSize,int numBlocks){
-		PANELSIZE = panelSize;
-		AMOUNT_BLOCKS = numBlocks;
-		CELLSIZE = panelSize/numBlocks;
-	}
-	
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		this.setBackground(Color.WHITE);
-		g.setColor(Color.BLUE);
-		g.fillRect(0, 0, CELLSIZE, CELLSIZE);
-		g.setColor(Color.CYAN);
-		g.fillRect(CELLSIZE, CELLSIZE, CELLSIZE, CELLSIZE);
+		System.out.println("Building gui done!");
 	}
 }
