@@ -20,7 +20,9 @@ public class BlockPuzzleFrame extends JFrame{
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
-		JPanel solvingPanel = new BlockPuzzleBoard(800,7);
+		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
+		//add the controller 
+		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel);
 //		solvingPanel.setSize(350,350);
 		String[] test = {"item1","item2"};
 		JList<String> solutionList = new JList(test);
@@ -31,10 +33,13 @@ public class BlockPuzzleFrame extends JFrame{
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
 		controlPanel.setAlignmentX(CENTER_ALIGNMENT);
 		JButton startBtn = new JButton("Start");
+		startBtn.addActionListener (ae -> controller.actionPerformedSolve (ae));
 		controlPanel.add(startBtn);
 		JButton pauseBtn = new JButton("Pause");
+		pauseBtn.addActionListener (ae -> controller.actionPerformedPause (ae));
 		controlPanel.add(pauseBtn);
 		JButton stopBtn = new JButton("Stop");
+		stopBtn.addActionListener (ae -> controller.actionPerformedStop(ae));
 		controlPanel.add(stopBtn);
 		this.add(controlPanel,BorderLayout.SOUTH);
 //		this.pack();
