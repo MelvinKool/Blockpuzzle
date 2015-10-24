@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-public class BlockPuzzleBoard extends JPanel implements MouseListener{
+public class BlockPuzzleBoard extends JPanel{
 	private final int PANELSIZE;
 	private final int AMOUNT_BLOCKS;
 	private final int CELLSIZE;
@@ -16,7 +16,6 @@ public class BlockPuzzleBoard extends JPanel implements MouseListener{
 		PANELSIZE = panelSize;
 		AMOUNT_BLOCKS = numBlocks;
 		CELLSIZE = panelSize/numBlocks;
-		this.addMouseListener(this);
 	}
 	
 	public void paintComponent(Graphics g){
@@ -26,34 +25,5 @@ public class BlockPuzzleBoard extends JPanel implements MouseListener{
 		g.fillRect(0, 0, CELLSIZE, CELLSIZE);
 		g.setColor(Color.CYAN);
 		g.fillRect(CELLSIZE, CELLSIZE, CELLSIZE, CELLSIZE);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// place/remove the pin
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// highlight?
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }
