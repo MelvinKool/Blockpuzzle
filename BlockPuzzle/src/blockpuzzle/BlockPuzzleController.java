@@ -28,6 +28,11 @@ public class BlockPuzzleController implements MouseListener{
 		System.out.println("Stop button clicked");
 	}
 	
+	//board panel clicked
+	public void boardClicked(MouseEvent e){
+		System.out.println("Board clicked");
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

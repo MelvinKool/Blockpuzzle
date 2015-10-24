@@ -2,8 +2,6 @@ package blockpuzzle;
 
 /*              GUI              */
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,9 +21,11 @@ public class BlockPuzzleFrame extends JFrame{
 		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
 		//add the controller 
 		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel);
+		solvingPanel.addMouseListener(controller);
 //		solvingPanel.setSize(350,350);
 		String[] test = {"item1","item2"};
 		JList<String> solutionList = new JList(test);
+		solutionList.addMouseListener(controller);
 		JSplitPane solutionPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,solutionList,solvingPanel);
 //		solutionPane.setSize(1000,700);
 		this.add(solutionPane,BorderLayout.CENTER);
