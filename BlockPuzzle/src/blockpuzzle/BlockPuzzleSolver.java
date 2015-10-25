@@ -63,17 +63,12 @@ public class BlockPuzzleSolver{
 		solve(grid,0);
 		System.out.println("Done, waiting for results...");
 		System.out.printf("Found %d results\n",solutions.size());
-		System.out.println(max);
 		if(solutions.size() > 0)
 			return true;
 		return false;
 	}
-	int max = 0;
 	
 	public void solve(int[][] grid, int blockNr){
-		if(blockNr > max)
-			max = blockNr;
-        int newBlockNR;
         if(blockNr == 9){
             for(int[] p : grid){
                System.out.println( p[0] + " " + p[1] + " " + p[2] + " " + p[3] + " " + p[4] + " " + p[5] + " " + p[6]);
@@ -82,9 +77,6 @@ public class BlockPuzzleSolver{
             System.out.println("Found solution!");
             return;
         }
-        //no else needed
-        else
-            newBlockNR = blockNr +1;
         for(int y = 0; y < FIELDLENGTH; y ++){
             for(int x = 0; x < FIELDWIDTH; x++){
             	//for every rotation
@@ -95,7 +87,7 @@ public class BlockPuzzleSolver{
                     {
                     	placeBlock(x, y, block, blockNr, grid);
                         int[][] newGrid = clone2DArr(grid);
-                        solve(newGrid, newBlockNR);  
+                        solve(newGrid, blockNr + 1);  
                     }
                 }
             }
@@ -257,7 +249,7 @@ public class BlockPuzzleSolver{
             for(int i = 0; i < block.length; i++){
                 for(int j = 0; j < block[i].length;j++){
                     if(block[i][j]){
-                            puzzle[y + i][x + j] = number + 1;
+                            puzzle[y + i][x + j] = number;
                     }
                 }
             }
