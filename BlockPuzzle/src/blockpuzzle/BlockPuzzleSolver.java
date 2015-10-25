@@ -81,6 +81,7 @@ public class BlockPuzzleSolver{
             System.out.println("Found solution!");
             return;
         }
+        //no else needed
         else
             newBlockNR = blockNr +1;
         for(int y = 0; y < FIELDLENGTH; y ++){
@@ -271,14 +272,15 @@ public class BlockPuzzleSolver{
 			for(int i = 0; i < block.length; i++){
 				for(int j = 0; j < block[i].length;j++){
 					//If the place is empty and the block is false at that place, return false for speed improvement
-					if(puzzle[y + i][x + j] == 0){
-						if(!block[i][j]){
-							return false;
-						}
-					}
-					else if(block[i][j]){
+					if(!(puzzle[y + i][x + j] == 0) && block[i][j]){
+//						if(!block[i][j]){
+//							return false;
+//						}
 						return false;
 					}
+//					else if(block[i][j]){
+//						return false;
+//					}
 				}
 			}
 			return true;
