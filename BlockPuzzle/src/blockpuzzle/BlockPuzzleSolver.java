@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingWorker;
 
-public class BlockPuzzleSolver extends SwingWorker<Boolean,int[][]>{
+public class BlockPuzzleSolver{
 	private final boolean[][][] BLOCKS = {
 		{
 			{false,true,true},
@@ -45,7 +45,7 @@ public class BlockPuzzleSolver extends SwingWorker<Boolean,int[][]>{
 			{true,true}
 		}
 	};
-	private List<ArrayList<int[][]>> solutions = new ArrayList<ArrayList<int[][]>>();
+	private static List<int[][]> solutions = new ArrayList<>();
 	private final int FIELDWIDTH = 7;
 	private final int FIELDLENGTH = 7;
 	private final Point[] POLEPLACES = {
@@ -57,147 +57,168 @@ public class BlockPuzzleSolver extends SwingWorker<Boolean,int[][]>{
 	private int currentPole;
         /////////////////////////////////////////////////////////////////////////
 	public Boolean doInBackground(){
-		// TODO Auto-generated method stub
-//		int[][] puzzle = new int[7][7];
-//		placeBlock(1,1,BLOCKS[0],1,puzzle);
-//		solveBlockCombs(new ArrayList<Integer>());
-//		for(int [] i:puzzle){
-//			for(int j:i){
-//				System.out.printf("%d|",j);
-//			}
-//			System.out.println();
-//		}
-		System.out.println("Solving started...");
-		solveBlockCombs(new ArrayList<Integer>());
-		for(ArrayList<int[][]> i: solutions){
-			System.out.println("FOUND A SOLUTION !!!!!!!!!!!!");
-			for(int[][] j : i){
-				for(int[] k : j){
-					for(int l:k){
-						System.out.printf("%d|",l);
-					}
-					System.out.println();
-				}
-				System.out.println();
-				System.out.println();
-				System.out.println();
-			}
-			System.out.println("Next pole :");
-		}
-//		System.out.println(maxIndex);
-//		for(int[] i: test){
-//			for(int j:i){
-//				System.out.printf("%d|", j);
-//			}
-//			System.out.println();
-//		}
-		return true;
+		int[][] grid = new int[FIELDLENGTH][FIELDWIDTH];
+		grid[POLEPLACES[0].y][POLEPLACES[0].x] = -1;
+		System.out.println("Started...");
+		solve(grid,0);
+		System.out.println("Done, waiting for results...");
+		System.out.printf("Found %d results\n",solutions.size());
+		System.out.println(max);
+		if(solutions.size() > 0)
+			return true;
+		return false;
 	}
+	int max = 0;
+	public void solve(int[][] grid, int blockNr){
+		if(blockNr > max)
+			max = blockNr;
+        int newBlockNR;
+        if(blockNr == 9){
+            for(int[] p : grid){
+               System.out.println( p[0] + " " + p[1] + " " + p[2] + " " + p[3] + " " + p[4] + " " + p[5] + " " + p[6]);
+            }
+            addToSolutions(grid);
+            System.out.println("Found solution!");
+            return;
+        }
+        else
+            newBlockNR = blockNr +1;
+        for(int y = 0; y < FIELDLENGTH; y ++){
+            for(int x = 0; x < FIELDWIDTH; x++){
+            	//for every rotation
+            	boolean[][] block = BLOCKS[blockNr];
+                for(int i = 0; i < 4; i ++){
+                	block = rotateBlock(block);
+                    if (validMove(block,grid, x,y))
+                    {
+                    	placeBlock(x, y, block, blockNr, grid);
+                        int[][] newGrid = clone2DArr(grid);
+                        solve(newGrid, newBlockNR);  
+                    }
+                }
+            }
+        }
+    }
+	
+	/**
+     * adds the solutions grid to a list of all solutions for current pin
+     * @param grid 
+     */
+    public void addToSolutions(int[][] grid){
+        int[][] solution = clone2DArr(grid);
+ 
+        //Checks if the solver creates double results
+        if(solutions.contains(solution))
+            System.out.println("double result");
+        else
+            solutions.add(solution);
+        System.out.println("Added solution!");
+    }
 	/////////////////////////////////////////////////////////////////////////
-	private void solveBlockCombs(List<Integer> combs){
-            if(combs.size() == BLOCKS.length){
-                    int[] allCombs = new int[combs.size()];
-                    for(int i =0; i < combs.size(); i++){
-                            allCombs[i] = combs.get(i);
-                    }
-//                    for(int i: allCombs){
-//                        System.out.print(i + "|");
+//	private void solveBlockCombs(List<Integer> combs){
+//            if(combs.size() == BLOCKS.length){
+//                    int[] allCombs = new int[combs.size()];
+//                    for(int i =0; i < combs.size(); i++){
+//                            allCombs[i] = combs.get(i);
 //                    }
-//                    System.out.println();
-                    for(currentPole = 0; currentPole < POLEPLACES.length; currentPole++){
-                            //find the solution for every pole
-
-                            int [][]puzzle = new int[FIELDLENGTH][FIELDWIDTH];
-                            //A pole is -1
-                            puzzle[POLEPLACES[currentPole].y][POLEPLACES[currentPole].x] = -1;
-                            solveRotate(0,0,0,allCombs, puzzle);
-                    }
-//                    allCombinations.add(allCombs);
-            }
-            else{
-                    for(int i = 0; i < BLOCKS.length; i++){
-                            if(!combs.contains(i)){
-                                    combs.add(i);
-                                    solveBlockCombs(combs);
-                            }
-                    }
-            }
-            if(combs.size() > 0){
-                    combs.remove(combs.size() - 1);
-            }
-	}
+////                    for(int i: allCombs){
+////                        System.out.print(i + "|");
+////                    }
+////                    System.out.println();
+//                    for(currentPole = 0; currentPole < POLEPLACES.length; currentPole++){
+//                            //find the solution for every pole
+//
+//                            int [][]puzzle = new int[FIELDLENGTH][FIELDWIDTH];
+//                            //A pole is -1
+//                            puzzle[POLEPLACES[currentPole].y][POLEPLACES[currentPole].x] = -1;
+//                            solveRotate(0,0,0,allCombs, puzzle);
+//                    }
+////                    allCombinations.add(allCombs);
+//            }
+//            else{
+//                    for(int i = 0; i < BLOCKS.length; i++){
+//                            if(!combs.contains(i)){
+//                                    combs.add(i);
+//                                    solveBlockCombs(combs);
+//                            }
+//                    }
+//            }
+//            if(combs.size() > 0){
+//                    combs.remove(combs.size() - 1);
+//            }
+//	}
 //	static int [][] test = new int[FIELDLENGTH][FIELDWIDTH];
 //	static int maxIndex = 0;
 	/*Solves the puzzle*/
-	private boolean solveRotate(int x, int y,int curBlockCombIndex, int[] blockComb, int[][] puzzle){
-//		if(curBlockCombIndex > maxIndex){
-//			maxIndex = curBlockCombIndex;
+//	private boolean solveRotate(int x, int y,int curBlockCombIndex, int[] blockComb, int[][] puzzle){
+////		if(curBlockCombIndex > maxIndex){
+////			maxIndex = curBlockCombIndex;
+////		}
+////		if(maxIndex == 4){
+////                    int [][] myInt = new int[puzzle.length][];
+////                    for(int i = 0; i < puzzle.length; i++)
+////                    {
+////                      int[] aMatrix = puzzle[i];
+////                      int   aLength = aMatrix.length;
+////                      myInt[i] = new int[aLength];
+////                      System.arraycopy(aMatrix, 0, myInt[i], 0, aLength);
+////                    }
+////		}
+//		if(y == FIELDLENGTH){
+//			//check if successful
+//			if(curBlockCombIndex == blockComb.length){
+//				//if there is no solution for this pole yet, add it to solutionPoles and make a new index for the pole
+//				if(!solutionPoles.contains(currentPole)){
+//					solutions.add(new ArrayList<int[][]>());
+//					solutionPoles.add(currentPole);
+//				}
+//				//copy array and add it to the puzzle solution stack
+//				//YOU DON'T KNOW WHETHER THE SOLUTION IS FROM THE LAST POLE
+//				//check if this is correct!!!!!!!!!!!!!!!!!
+//				solutions.get(solutionPoles.indexOf(currentPole)).add(clone2DArr(puzzle));
+//				return true;
+//			}
+//			else{
+//				return false;
+//			}
 //		}
-//		if(maxIndex == 4){
-//                    int [][] myInt = new int[puzzle.length][];
-//                    for(int i = 0; i < puzzle.length; i++)
-//                    {
-//                      int[] aMatrix = puzzle[i];
-//                      int   aLength = aMatrix.length;
-//                      myInt[i] = new int[aLength];
-//                      System.arraycopy(aMatrix, 0, myInt[i], 0, aLength);
-//                    }
+//		else if(puzzle[x][y] == 0){
+//			boolean[][] currentBlock = clone2DArr(BLOCKS[blockComb[curBlockCombIndex]]);
+//			//try rotating the block
+//			//think about rotating the block every sides and validating whether the block fits
+//			for(int i =0; i< 4; i++){
+//				if(validMove(currentBlock,puzzle,x,y)){
+//					//place the block
+//					placeBlock(x,y,currentBlock,curBlockCombIndex + 1,puzzle);
+//					if(x < FIELDWIDTH - 1){
+//						if(x + currentBlock[0].length < FIELDWIDTH){
+//							solveRotate(x + currentBlock[0].length,y,curBlockCombIndex + 1,blockComb,puzzle);
+//						}
+//						else{
+//							solveRotate(x + currentBlock[0].length - 1,y,curBlockCombIndex + 1,blockComb,puzzle);
+//						}
+//					}
+//					else{
+//						solveRotate(0,y + 1, curBlockCombIndex + 1,blockComb,puzzle);
+//					}					
+//					//revert the placed block
+//					placeBlock(x,y,currentBlock,0,puzzle);
+//				}
+//				currentBlock = rotateBlock(currentBlock);
+//			}
 //		}
-		if(y == FIELDLENGTH){
-			//check if successful
-			if(curBlockCombIndex == blockComb.length){
-				//if there is no solution for this pole yet, add it to solutionPoles and make a new index for the pole
-				if(!solutionPoles.contains(currentPole)){
-					solutions.add(new ArrayList<int[][]>());
-					solutionPoles.add(currentPole);
-				}
-				//copy array and add it to the puzzle solution stack
-				//YOU DON'T KNOW WHETHER THE SOLUTION IS FROM THE LAST POLE
-				//check if this is correct!!!!!!!!!!!!!!!!!
-				solutions.get(solutionPoles.indexOf(currentPole)).add(clone2DArr(puzzle));
-				return true;
-			}
-			else{
-				return false;
-			}
-		}
-		else if(puzzle[x][y] == 0){
-			boolean[][] currentBlock = clone2DArr(BLOCKS[blockComb[curBlockCombIndex]]);
-			//try rotating the block
-			//think about rotating the block every sides and validating whether the block fits
-			for(int i =0; i< 4; i++){
-				if(validMove(currentBlock,puzzle,x,y)){
-					//place the block
-					placeBlock(x,y,currentBlock,curBlockCombIndex + 1,puzzle);
-					if(x < FIELDWIDTH - 1){
-						if(x + currentBlock[0].length < FIELDWIDTH){
-							solveRotate(x + currentBlock[0].length,y,curBlockCombIndex + 1,blockComb,puzzle);
-						}
-						else{
-							solveRotate(x + currentBlock[0].length - 1,y,curBlockCombIndex + 1,blockComb,puzzle);
-						}
-					}
-					else{
-						solveRotate(0,y + 1, curBlockCombIndex + 1,blockComb,puzzle);
-					}					
-					//revert the placed block
-					placeBlock(x,y,currentBlock,0,puzzle);
-				}
-				currentBlock = rotateBlock(currentBlock);
-			}
-		}
-		//The block is not empty
-		else{
-			if(x < FIELDWIDTH - 1){
-				solveRotate(x + 1,y,curBlockCombIndex,blockComb,puzzle);
-			}
-			else{
-				solveRotate(0,y + 1, curBlockCombIndex,blockComb,puzzle);
-			}
-		}
-		//if there is no solution
-		return false;
-	}
+//		//The block is not empty
+//		else{
+//			if(x < FIELDWIDTH - 1){
+//				solveRotate(x + 1,y,curBlockCombIndex,blockComb,puzzle);
+//			}
+//			else{
+//				solveRotate(0,y + 1, curBlockCombIndex,blockComb,puzzle);
+//			}
+//		}
+//		//if there is no solution
+//		return false;
+//	}
 	
 //        private static <T> T[][] clone2DArr(T[][] toClone) {
 ////            toClone[0][0].
