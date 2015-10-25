@@ -1,5 +1,6 @@
 package blockpuzzle;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -31,12 +32,31 @@ public class BlockPuzzleController implements MouseListener{
 	//board panel clicked
 	public void boardClicked(MouseEvent e){
 		System.out.println("Board clicked");
+		//determine weather a pole could be placed
+		//calculate x and y coordinates of pole
+		int x = e.getX() / board.CELLSIZE;
+		int y = e.getY() / board.CELLSIZE;
+		Point p = new Point(x,y);
+		if(x < board.AMOUNT_BLOCKS && y < board.AMOUNT_BLOCKS && !board.placedPoles.contains(p)){
+			//place pole on the board and draw pole
+			board.placedPoles.add(p);
+			
+		}
+	}
+	
+	//solution list clicked
+	public void solutionlistClicked(MouseEvent e){
+		System.out.println("Solution list clicked");
+		//show the selected solution
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Mouse clicked controller event");
+		if(e.getSource() instanceof javax.swing.JPanel)
+			boardClicked(e);
+		else if(e.getSource() instanceof javax.swing.JList<?>)
+			solutionlistClicked(e);
 	}
 
 	@Override
