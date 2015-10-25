@@ -2,76 +2,53 @@ package blockpuzzle;
 
 /*              GUI              */
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.io.PrintStream;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 //////////////////////////////////
 
 public class BlockPuzzleFrame extends JFrame{
 	public BlockPuzzleFrame(){
-		//activate controller
-		BlockPuzzleController controller = new BlockPuzzleController();
-		//layout
-		this.setTitle("Blockpuzzle Solver v1.0");
-		this.setSize(1500, 1000);
+		System.out.println("Building gui...");
 		this.setVisible(true);
-		this.pack();
-		
-		JPanel mainPanel = new JPanel(new BorderLayout());
-		//add components
-		JPanel solvingPanel = new JPanel();
-		solvingPanel.setLayout(new BoxLayout(solvingPanel,BoxLayout.Y_AXIS));
-		JScrollPane solutionPoles = new JScrollPane();
-		JPanel puzzleGrid = new JPanel();
-		JSplitPane sPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,solutionPoles,puzzleGrid);
-		solvingPanel.add(sPane);
-		JProgressBar solveProgressBar = new JProgressBar();
-		solvingPanel.add(solveProgressBar);
-		mainPanel.add(solvingPanel, BorderLayout.NORTH);
-		
-		JPanel controlPanel = new JPanel(new FlowLayout());
-		JButton solveBtn = new JButton("Solve");
-		controlPanel.add(solveBtn);
-		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setLayout(new BorderLayout());
+		this.setTitle("Blockpuzzle solver v1.0");
+		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
+		//add the controller 
+		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel);
+		solvingPanel.addMouseListener(controller);
+//		solvingPanel.setSize(350,350);
+		String[] test = {"item1","item2"};
+		JList<String> solutionList = new JList(test);
+		solutionList.addMouseListener(controller);
+		JSplitPane solutionPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,solutionList,solvingPanel);
+//		solutionPane.setSize(1000,700);
+		this.add(solutionPane,BorderLayout.CENTER);
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
+		controlPanel.setAlignmentX(CENTER_ALIGNMENT);
+		controlPanel.setBorder (BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		JButton startBtn = new JButton("Start");
+		startBtn.setEnabled(false);
+		startBtn.addActionListener (ae -> controller.actionPerformedSolve (ae));
+		controlPanel.add(startBtn);
 		JButton pauseBtn = new JButton("Pause");
+		pauseBtn.setEnabled(false);
+		pauseBtn.addActionListener (ae -> controller.actionPerformedPause (ae));
 		controlPanel.add(pauseBtn);
-		
-		mainPanel.add(controlPanel, BorderLayout.CENTER);
-		
-		JPanel consolePanel = new JPanel();
-		consolePanel.setLayout(new BoxLayout(consolePanel,BoxLayout.Y_AXIS));
-		JButton collapseBtn = new JButton("Show console");
-		consolePanel.add(collapseBtn);
-		JTextArea console = new JTextArea();
-		
-		/*            Built-in console               */
-		///////////////////////////////////////////////
-		PrintStream con=new PrintStream(new Console(console));
-		System.setOut(con);
-		System.setErr(con);
-		///////////////////////////////////////////////
-		JScrollPane scroll = new JScrollPane (console, 
-				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		consolePanel.add(console);
-		mainPanel.add(consolePanel,BorderLayout.SOUTH);
-		//add the panel to the JFrame
-		this.add(mainPanel);
-//		System.out.println("Testdasf");
-//		BlockPuzzleSolver test = new BlockPuzzleSolver();
-//		test.Start();
-	}
-	
-	public Dimension getPreferredSize()
-	{
-		return new Dimension(1024,768);
+		JButton stopBtn = new JButton("Stop");
+		stopBtn.setEnabled(false);
+		stopBtn.addActionListener (ae -> controller.actionPerformedStop(ae));
+		controlPanel.add(stopBtn);
+		this.add(controlPanel,BorderLayout.SOUTH);
+//		this.pack();
+		this.setSize(1000, 700);
+		System.out.println("Building gui done!");
 	}
 }
