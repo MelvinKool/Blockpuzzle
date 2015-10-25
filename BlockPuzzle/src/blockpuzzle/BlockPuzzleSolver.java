@@ -69,6 +69,7 @@ public class BlockPuzzleSolver{
 		return false;
 	}
 	int max = 0;
+	
 	public void solve(int[][] grid, int blockNr){
 		if(blockNr > max)
 			max = blockNr;
@@ -231,32 +232,32 @@ public class BlockPuzzleSolver{
 //            return fieldClone;
 //        }
         
-        private int[][] clone2DArr(int[][] toClone) {
-            //toClone[0][0].
-            int[][] fieldClone = new int[toClone.length][];
-            for(int i = 0; i < toClone.length; i ++){
-                fieldClone[i] = new int[toClone[i].length];
-                System.arraycopy(toClone[i], 0, fieldClone[i], 0, toClone[i].length);
-            }
-            return fieldClone;
+    private int[][] clone2DArr(int[][] toClone) {
+        //toClone[0][0].
+        int[][] fieldClone = new int[toClone.length][];
+        for(int i = 0; i < toClone.length; i ++){
+            fieldClone[i] = new int[toClone[i].length];
+            System.arraycopy(toClone[i], 0, fieldClone[i], 0, toClone[i].length);
         }
-        
-        private boolean[][] clone2DArr(boolean[][] toClone) {
-            //toClone[0][0].
-            boolean[][] fieldClone = new boolean[toClone.length][];
-            for(int i = 0; i < toClone.length; i ++){
-                fieldClone[i] = new boolean[toClone[i].length];
-                System.arraycopy(toClone[i], 0, fieldClone[i], 0, toClone[i].length);
-            }
-            return fieldClone;
+        return fieldClone;
+    }
+    
+    private boolean[][] clone2DArr(boolean[][] toClone) {
+        //toClone[0][0].
+        boolean[][] fieldClone = new boolean[toClone.length][];
+        for(int i = 0; i < toClone.length; i ++){
+            fieldClone[i] = new boolean[toClone[i].length];
+            System.arraycopy(toClone[i], 0, fieldClone[i], 0, toClone[i].length);
         }
+        return fieldClone;
+    }
         
 	//places a block on the puzzle
 	private void placeBlock(int x, int y, boolean[][] block, int number, int[][] puzzle){
             for(int i = 0; i < block.length; i++){
                 for(int j = 0; j < block[i].length;j++){
                     if(block[i][j]){
-                            puzzle[y + i][x + j] = number;
+                            puzzle[y + i][x + j] = number + 1;
                     }
                 }
             }
@@ -273,14 +274,8 @@ public class BlockPuzzleSolver{
 				for(int j = 0; j < block[i].length;j++){
 					//If the place is empty and the block is false at that place, return false for speed improvement
 					if(!(puzzle[y + i][x + j] == 0) && block[i][j]){
-//						if(!block[i][j]){
-//							return false;
-//						}
 						return false;
 					}
-//					else if(block[i][j]){
-//						return false;
-//					}
 				}
 			}
 			return true;
