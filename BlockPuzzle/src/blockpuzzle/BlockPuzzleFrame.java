@@ -18,6 +18,7 @@ public class BlockPuzzleFrame extends JFrame{
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
+		this.setTitle("Blockpuzzle solver v1.0");
 		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
 		//add the controller 
 		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel);
@@ -32,6 +33,7 @@ public class BlockPuzzleFrame extends JFrame{
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
 		controlPanel.setAlignmentX(CENTER_ALIGNMENT);
+		controlPanel.setBorder (BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		JButton startBtn = new JButton("Start");
 		startBtn.setEnabled(false);
 		startBtn.addActionListener (ae -> controller.actionPerformedSolve (ae));
