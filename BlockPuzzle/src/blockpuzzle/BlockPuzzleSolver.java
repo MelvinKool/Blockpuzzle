@@ -85,8 +85,8 @@ public class BlockPuzzleSolver{
                 	block = rotateBlock(block);
                     if (validMove(block,grid, x,y))
                     {
-                    	placeBlock(x, y, block, blockNr, grid);
                         int[][] newGrid = clone2DArr(grid);
+                        placeBlock(x, y, block, blockNr, newGrid);
                         solve(newGrid, blockNr + 1);  
                     }
                 }
@@ -223,7 +223,7 @@ public class BlockPuzzleSolver{
 //            }
 //            return fieldClone;
 //        }
-        
+    
     private int[][] clone2DArr(int[][] toClone) {
         //toClone[0][0].
         int[][] fieldClone = new int[toClone.length][];
@@ -249,7 +249,7 @@ public class BlockPuzzleSolver{
             for(int i = 0; i < block.length; i++){
                 for(int j = 0; j < block[i].length;j++){
                     if(block[i][j]){
-                            puzzle[y + i][x + j] = number;
+                            puzzle[y + i][x + j] = number + 1;
                     }
                 }
             }
