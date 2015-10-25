@@ -265,7 +265,7 @@ public class BlockPuzzleSolver{
 	/*Checks whether the block could be placed at the specified locations and if there are blank bricks*/
 	private boolean validMove(boolean[][] block, int [][] puzzle, int x, int y){
 		//if it doesn't fit, return false
-		if(x - 1 + longestRow(block) > FIELDWIDTH - 1|| y - 1 + block.length > FIELDLENGTH - 1){
+		if(x - 1 + longestRow(block) > FIELDWIDTH - 1 || y - 1 + block.length > FIELDLENGTH - 1){
 			return false;
 		}
 		else{
