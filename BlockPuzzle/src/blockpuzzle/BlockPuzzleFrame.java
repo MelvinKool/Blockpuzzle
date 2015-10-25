@@ -33,12 +33,15 @@ public class BlockPuzzleFrame extends JFrame{
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));
 		controlPanel.setAlignmentX(CENTER_ALIGNMENT);
 		JButton startBtn = new JButton("Start");
+		startBtn.setEnabled(false);
 		startBtn.addActionListener (ae -> controller.actionPerformedSolve (ae));
 		controlPanel.add(startBtn);
 		JButton pauseBtn = new JButton("Pause");
+		pauseBtn.setEnabled(false);
 		pauseBtn.addActionListener (ae -> controller.actionPerformedPause (ae));
 		controlPanel.add(pauseBtn);
 		JButton stopBtn = new JButton("Stop");
+		stopBtn.setEnabled(false);
 		stopBtn.addActionListener (ae -> controller.actionPerformedStop(ae));
 		controlPanel.add(stopBtn);
 		this.add(controlPanel,BorderLayout.SOUTH);
