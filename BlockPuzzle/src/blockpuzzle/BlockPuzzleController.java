@@ -37,9 +37,9 @@ public class BlockPuzzleController implements MouseListener{
 		int x = e.getX() / board.CELLSIZE;
 		int y = e.getY() / board.CELLSIZE;
 		Point p = new Point(x,y);
-		if(x < board.AMOUNT_BLOCKS && y < board.AMOUNT_BLOCKS && !board.polePlaces.contains(p)){
+		if(x < board.AMOUNT_BLOCKS && y < board.AMOUNT_BLOCKS && !board.placedPoles.contains(p)){
 			//place pole on the board and draw pole
-			board.polePlaces.add(p);
+			board.placedPoles.add(p);
 			
 		}
 	}

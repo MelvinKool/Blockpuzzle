@@ -14,8 +14,11 @@ public class BlockPuzzleBoard extends JPanel{
 	private final int PANELSIZE;
 	public final int AMOUNT_BLOCKS;
 	public final int CELLSIZE;
-	public List<Point> polePlaces = new ArrayList<Point>();
-	
+	public List<Point> placedPoles = new ArrayList<Point>();
+	private final Point[] POLEPLACES = {
+			//Decide the places the poles could be placed
+			new Point(6,1),new Point(6,2),new Point(6,6),new Point(5,3),new Point(4,0),new Point(4,2),new Point(4,5),new Point(3,3),new Point(3,4),new Point(1,1),new Point(1,2),new Point(1,6),new Point(0,3)
+	};
 	public BlockPuzzleBoard(int panelSize,int numBlocks){
 		PANELSIZE = panelSize;
 		AMOUNT_BLOCKS = numBlocks;
@@ -25,6 +28,20 @@ public class BlockPuzzleBoard extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		//draw holes
+		g.setColor(Color.BLACK);
+		for(int i = 0; i < 7; i++){
+			for(int j = 0; j < 7; j++){
+				g.fillOval(i, j, CELLSIZE / 2, CELLSIZE / 2);
+			}
+		}
 	}
 	
+//	public void placePole(int x, int y){
+//		Point p = new Point(x,y);
+//		if(!placedPoles.contains(p)){
+//			placedPoles.add(p);
+//			//draw on board
+//		}
+//	}
 }
