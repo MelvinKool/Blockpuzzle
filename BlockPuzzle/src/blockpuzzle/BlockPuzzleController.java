@@ -9,14 +9,18 @@ import javax.swing.JPanel;
 
 public class BlockPuzzleController implements MouseListener{
 	BlockPuzzleBoard board;
-	public BlockPuzzleController(BlockPuzzleBoard board) {
+	BlockPuzzleFrame frame;
+	public BlockPuzzleController(BlockPuzzleBoard board, BlockPuzzleFrame frame) {
 		//add the board panel for setting focus etc.
 		this.board = board;
+		this.frame = frame;
 	}
 	
 	//start button
 	public void actionPerformedSolve (ActionEvent ae){
 		System.out.println("Start button clicked");
+		BlockpuzzleSolver solver = new BlockpuzzleSolver(frame);
+	 	solver.placePin(solver.pinPositions, 8);
 	}
 	
 	//pause button
@@ -40,7 +44,6 @@ public class BlockPuzzleController implements MouseListener{
 		if(x < board.AMOUNT_BLOCKS && y < board.AMOUNT_BLOCKS && !board.placedPoles.contains(p)){
 			//place pole on the board and draw pole
 			board.placedPoles.add(p);
-			
 		}
 	}
 	

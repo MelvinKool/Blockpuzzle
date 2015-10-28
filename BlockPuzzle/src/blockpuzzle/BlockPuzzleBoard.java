@@ -38,6 +38,10 @@ public class BlockPuzzleBoard extends JPanel{
 		}
 	}
 	
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("board clicked 2");
+	}
 //	public void placePole(int x, int y){
 //		Point p = new Point(x,y);
 //		if(!placedPoles.contains(p)){

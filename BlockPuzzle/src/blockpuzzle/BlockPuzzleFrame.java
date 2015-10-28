@@ -21,7 +21,7 @@ public class BlockPuzzleFrame extends JFrame{
 		this.setTitle("Blockpuzzle solver v1.0");
 		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
 		//add the controller 
-		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel);
+		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel,this);
 		solvingPanel.addMouseListener(controller);
 //		solvingPanel.setSize(350,350);
 		String[] test = {"item1","item2"};
@@ -35,7 +35,7 @@ public class BlockPuzzleFrame extends JFrame{
 		controlPanel.setAlignmentX(CENTER_ALIGNMENT);
 		controlPanel.setBorder (BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		JButton startBtn = new JButton("Start");
-		startBtn.setEnabled(false);
+//		startBtn.setEnabled(false);
 		startBtn.addActionListener (ae -> controller.actionPerformedSolve (ae));
 		controlPanel.add(startBtn);
 		JButton pauseBtn = new JButton("Pause");
