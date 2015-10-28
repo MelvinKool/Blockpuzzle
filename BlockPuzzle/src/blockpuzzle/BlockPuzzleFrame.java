@@ -22,7 +22,7 @@ public class BlockPuzzleFrame extends JFrame{
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 		this.setTitle("Blockpuzzle solver v1.0");
-		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
+		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7,new BlockPuzzleSolver(this));
 		//add the controller 
 		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel,this);
 		solvingPanel.addMouseListener(controller);
@@ -51,7 +51,7 @@ public class BlockPuzzleFrame extends JFrame{
 		controlPanel.add(stopBtn);
 		this.add(controlPanel,BorderLayout.SOUTH);
 //		this.pack();
-		this.setSize(1000, 700);
+		this.setSize(1000, 900);
 		System.out.println("Building gui done!");
 	}
 	

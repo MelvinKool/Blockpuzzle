@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 public class BlockPuzzleBoard extends JPanel{
+	BlockPuzzleSolver solver;
+	Integer paintSolutionIndex;
 	private final int PANELSIZE;
 	public final int AMOUNT_BLOCKS;
 	public final int CELLSIZE;
@@ -19,22 +21,42 @@ public class BlockPuzzleBoard extends JPanel{
 			//Decide the places the poles could be placed
 			new Point(6,1),new Point(6,2),new Point(6,6),new Point(5,3),new Point(4,0),new Point(4,2),new Point(4,5),new Point(3,3),new Point(3,4),new Point(1,1),new Point(1,2),new Point(1,6),new Point(0,3)
 	};
-	public BlockPuzzleBoard(int panelSize,int numBlocks){
+	public BlockPuzzleBoard(int panelSize,int numBlocks, BlockPuzzleSolver solver){
 		PANELSIZE = panelSize;
 		AMOUNT_BLOCKS = numBlocks;
 		CELLSIZE = panelSize/numBlocks;
 		this.setBackground(Color.WHITE);
+		this.solver = solver;
 	}
 	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		//draw holes
+		if(paintSolutionIndex == null){
+			//paint pin holes
+			
+			return;
+		}
+		//paint blocks
 		g.setColor(Color.BLACK);
-		for(int i = 0; i < PANELSIZE; i = i + (PANELSIZE/6)){
-			for(int j = 0; j < PANELSIZE; j = j + (PANELSIZE /6)){
-				g.fillOval(i, j, CELLSIZE / 2, CELLSIZE / 2);
+		int x = 0, y = 0;
+		String hexvalue; 
+		for(int i = 0; i < PANELSIZE; i = i + CELLSIZE){
+			for(int j = 0; j < PANELSIZE; j = j + CELLSIZE){
+//				System.out.println(x + " " + y);
+				int cellValue = solver.solutions.get(paintSolutionIndex)[y][x];
+				//hexvalue = Integer.toHexString(255/cellValue);
+				//g.setColor(Color.decode(hexvalue));
+				g.setColor(Color.getHSBColor(cellValue / 10f, 1, 0.9f));
+//				System.out.print(cellValue + " ");
+//				g.setColor(cellNumb/maxColorValue);
+				g.fillRect(j++, i, CELLSIZE, CELLSIZE);
+				x++;
 			}
+			i++;
+			x = 0;
+			y++;
+//			System.out.println();
 		}
 	}
 	

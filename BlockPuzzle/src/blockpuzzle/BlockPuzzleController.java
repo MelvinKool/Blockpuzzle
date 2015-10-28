@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
+import javax.swing.JList;
 
 public class BlockPuzzleController implements MouseListener{
 	BlockPuzzleBoard board;
@@ -19,7 +20,8 @@ public class BlockPuzzleController implements MouseListener{
 	//start button
 	public void actionPerformedSolve (ActionEvent ae){
 		System.out.println("Start button clicked");
-		BlockpuzzleSolver solver = new BlockpuzzleSolver(frame);
+		BlockPuzzleSolver solver = new BlockPuzzleSolver(frame);
+		board.solver = solver;
 	 	solver.placePin(solver.pinPositions, 8);
 	}
 	
@@ -51,6 +53,10 @@ public class BlockPuzzleController implements MouseListener{
 	public void solutionlistClicked(MouseEvent e){
 		System.out.println("Solution list clicked");
 		//show the selected solution
+//		JList templist = (JList)e.getSource();
+		board.paintSolutionIndex = frame.solutionList.getSelectedIndex();
+		board.repaint();
+		
 	}
 	
 	@Override
