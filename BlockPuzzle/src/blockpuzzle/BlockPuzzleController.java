@@ -19,8 +19,8 @@ public class BlockPuzzleController implements MouseListener{
 	//start button
 	public void actionPerformedSolve (ActionEvent ae){
 		System.out.println("Start button clicked");
-		BlockpuzzleSolver solver = new BlockpuzzleSolver(frame);
-	 	solver.placePin(solver.pinPositions, 8);
+		BlockPuzzleSolver solver = new BlockPuzzleSolver(frame);
+	 	solver.execute();
 	}
 	
 	//pause button
