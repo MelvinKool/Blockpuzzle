@@ -5,6 +5,7 @@
  */
 package blockpuzzle;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author Kjeld
  */
-public class BlockpuzzleSolver {
+public class BlockPuzzleSolver {
     
     List<Block> Blocks = new ArrayList<>();
     List<int[]> pinPositions = new ArrayList<>();
@@ -31,7 +32,7 @@ public class BlockpuzzleSolver {
 //        {0,0,0,0,0,0,0}
 //    };
     
-    public BlockpuzzleSolver(BlockPuzzleFrame frame){
+    public BlockPuzzleSolver(BlockPuzzleFrame frame){
     	Blocks.add(new Block (new int[][] {{0,1},{0,2},{1,1},{1,2},{1,3},{2,0},{2,1},{2,2}}, 1, 3));        
         Blocks.add(new Block (new int[][] {{0,1},{1,0},{1,1},{1,2},{2,0},{2,1},{2,2}}, 2, 3));        
         Blocks.add(new Block (new int[][] {{0,2},{1,0},{1,1},{1,2},{1,3}}, 3, 3));        
@@ -56,10 +57,10 @@ public class BlockpuzzleSolver {
      * @param positions
      * @param pinNR 
      */
-    public void placePin(List<int[]> positions, int pinNR){
-        int[] pinPos = positions.get(pinNR);
+    public void placePin(List<int[]> positions, Point pinNR){
+    	int x = pinNR.x, y = pinNR.y;
         int[][] useGrid = grid.clone();
-        useGrid[pinPos[0]][pinPos[1]] = 9;
+        useGrid[y][x] = 10;
         solve(useGrid.clone(), Blocks, 0);
     }
     

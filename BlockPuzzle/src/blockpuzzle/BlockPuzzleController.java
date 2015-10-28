@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
+import javax.swing.JList;
 
 public class BlockPuzzleController implements MouseListener{
 	BlockPuzzleBoard board;
@@ -19,8 +20,9 @@ public class BlockPuzzleController implements MouseListener{
 	//start button
 	public void actionPerformedSolve (ActionEvent ae){
 		System.out.println("Start button clicked");
-		BlockpuzzleSolver solver = new BlockpuzzleSolver(frame);
-	 	solver.placePin(solver.pinPositions, 8);
+		BlockPuzzleSolver solver = new BlockPuzzleSolver(frame);
+		board.solver = solver;
+	 	solver.placePin(solver.pinPositions, board.placedPole);
 	}
 	
 	//pause button
@@ -38,12 +40,15 @@ public class BlockPuzzleController implements MouseListener{
 		System.out.println("Board clicked");
 		//determine weather a pole could be placed
 		//calculate x and y coordinates of pole
-		int x = e.getX() / board.CELLSIZE;
-		int y = e.getY() / board.CELLSIZE;
+		int x = ((e.getX() - board.CELLSIZE / 2) / board.CELLSIZE > 0) ? (e.getX() - board.CELLSIZE / 2) / board.CELLSIZE : 0;
+		int y = ((e.getY() - board.CELLSIZE / 2) / board.CELLSIZE > 0) ? (e.getY() - board.CELLSIZE  /2)/ board.CELLSIZE : 0;
+//		System.out.println("x = " + x + "y = "+ y);
 		Point p = new Point(x,y);
-		if(x < board.AMOUNT_BLOCKS && y < board.AMOUNT_BLOCKS && !board.placedPoles.contains(p)){
+		if(x < board.AMOUNT_BLOCKS && y < board.AMOUNT_BLOCKS){
 			//place pole on the board and draw pole
-			board.placedPoles.add(p);
+			board.placedPole = p;
+			//draw the pole
+			board.repaint();
 		}
 	}
 	
@@ -51,6 +56,10 @@ public class BlockPuzzleController implements MouseListener{
 	public void solutionlistClicked(MouseEvent e){
 		System.out.println("Solution list clicked");
 		//show the selected solution
+//		JList templist = (JList)e.getSource();
+		board.paintSolutionIndex = frame.solutionList.getSelectedIndex();
+		board.repaint();
+		
 	}
 	
 	@Override
