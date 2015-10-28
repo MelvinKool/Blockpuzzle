@@ -16,7 +16,7 @@ public class BlockPuzzleBoard extends JPanel{
 	private final int PANELSIZE;
 	public final int AMOUNT_BLOCKS;
 	public final int CELLSIZE;
-	public List<Point> placedPoles = new ArrayList<Point>();
+	public Point placedPole;
 	private final Point[] POLEPLACES = {
 			//Decide the places the poles could be placed
 			new Point(6,1),new Point(6,2),new Point(6,6),new Point(5,3),new Point(4,0),new Point(4,2),new Point(4,5),new Point(3,3),new Point(3,4),new Point(1,1),new Point(1,2),new Point(1,6),new Point(0,3)
@@ -34,7 +34,23 @@ public class BlockPuzzleBoard extends JPanel{
 		super.paintComponent(g);
 		if(paintSolutionIndex == null){
 			//paint pin holes
-			
+			g.setColor(new Color(102,51,0));
+			for(int[] pin : solver.pinPositions){
+				Point p = new Point(pin[1],pin[0]);
+				if(!(placedPole == null))
+					if(placedPole.x == p.x && placedPole.y == p.y)
+						g.setColor(Color.BLACK);
+				g.fillOval(CELLSIZE * pin[1] + CELLSIZE / 2, CELLSIZE * pin[0] + CELLSIZE /2, CELLSIZE / 2, CELLSIZE / 2);
+//				if(placedPole == p)
+				g.setColor(new Color(102,51,0));
+			}
+//			for(int i = 0; i < PANELSIZE; i = i + CELLSIZE){
+//				for(int j = 0; j < PANELSIZE - CELLSIZE; j = j + CELLSIZE){
+//					g.fillOval(j + CELLSIZE / 2, i + CELLSIZE /2, CELLSIZE / 2, CELLSIZE / 2);
+//				}
+//				i++;
+////				System.out.println();
+//			}
 			return;
 		}
 		//paint blocks
