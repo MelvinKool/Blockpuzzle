@@ -26,12 +26,13 @@ public class BlockPuzzleBoard extends JPanel{
 		this.setBackground(Color.WHITE);
 	}
 	
+	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		//draw holes
 		g.setColor(Color.BLACK);
-		for(int i = 0; i < 7; i++){
-			for(int j = 0; j < 7; j++){
+		for(int i = 0; i < PANELSIZE; i = i + (PANELSIZE/6)){
+			for(int j = 0; j < PANELSIZE; j = j + (PANELSIZE /6)){
 				g.fillOval(i, j, CELLSIZE / 2, CELLSIZE / 2);
 			}
 		}

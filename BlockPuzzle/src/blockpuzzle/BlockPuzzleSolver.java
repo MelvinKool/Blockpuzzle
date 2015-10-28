@@ -74,7 +74,7 @@ public class BlockPuzzleSolver{
                System.out.println( p[0] + " " + p[1] + " " + p[2] + " " + p[3] + " " + p[4] + " " + p[5] + " " + p[6]);
             }
             addToSolutions(grid);
-            System.out.println("Found solution!");
+//            System.out.println("Found solution!");
             return;
         }
         for(int y = 0; y < FIELDLENGTH; y ++){
@@ -106,7 +106,7 @@ public class BlockPuzzleSolver{
             System.out.println("double result");
         else
             solutions.add(solution);
-        System.out.println("Added solution!");
+//        System.out.println("Added solution!");
     }
 	/////////////////////////////////////////////////////////////////////////
 //	private void solveBlockCombs(List<Integer> combs){
