@@ -48,6 +48,7 @@ public class BlockpuzzleSolver {
         pinPositions.add(new int[] {3,4}); pinPositions.add(new int[] {5,1});
         pinPositions.add(new int[] {5,2}); pinPositions.add(new int[] {5,6});
         pinPositions.add(new int[] {6,3});
+        this.frame = frame;
     }
     
     /**
@@ -130,12 +131,14 @@ public class BlockpuzzleSolver {
      */
     public void addToSolutions(int[][] grid){
         int[][] solution = copyAndClearGrid(grid, false, 0);
- 
         //Checks if the solver creates double results
-        if(solutions.contains(solution))
-            System.out.println("double result");
-        else
-            solutions.add(solution);
+        if(solutions.contains(solution)){
+        	System.out.println("double result");
+        	return;
+        }
+        solutions.add(solution);
+        //add solution to jlist
+        frame.addSolutionToJList();
     }
     
     /**
