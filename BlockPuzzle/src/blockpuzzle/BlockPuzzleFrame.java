@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -13,6 +14,8 @@ import javax.swing.JSplitPane;
 //////////////////////////////////
 
 public class BlockPuzzleFrame extends JFrame{
+	JList<String> solutionList;
+	DefaultListModel solutionListModel;
 	public BlockPuzzleFrame(){
 		System.out.println("Building gui...");
 		this.setVisible(true);
@@ -21,11 +24,11 @@ public class BlockPuzzleFrame extends JFrame{
 		this.setTitle("Blockpuzzle solver v1.0");
 		BlockPuzzleBoard solvingPanel = new BlockPuzzleBoard(800,7);
 		//add the controller 
-		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel);
+		BlockPuzzleController controller = new BlockPuzzleController(solvingPanel,this);
 		solvingPanel.addMouseListener(controller);
 //		solvingPanel.setSize(350,350);
-		String[] test = {"item1","item2"};
-		JList<String> solutionList = new JList(test);
+		solutionListModel = new DefaultListModel<String>();
+		solutionList = new JList(solutionListModel);
 		solutionList.addMouseListener(controller);
 		JSplitPane solutionPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,solutionList,solvingPanel);
 //		solutionPane.setSize(1000,700);
@@ -35,7 +38,7 @@ public class BlockPuzzleFrame extends JFrame{
 		controlPanel.setAlignmentX(CENTER_ALIGNMENT);
 		controlPanel.setBorder (BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		JButton startBtn = new JButton("Start");
-		startBtn.setEnabled(false);
+//		startBtn.setEnabled(false);
 		startBtn.addActionListener (ae -> controller.actionPerformedSolve (ae));
 		controlPanel.add(startBtn);
 		JButton pauseBtn = new JButton("Pause");
@@ -50,5 +53,9 @@ public class BlockPuzzleFrame extends JFrame{
 //		this.pack();
 		this.setSize(1000, 700);
 		System.out.println("Building gui done!");
+	}
+	
+	public void addSolutionToJList(){
+		solutionListModel.addElement("Test");
 	}
 }
