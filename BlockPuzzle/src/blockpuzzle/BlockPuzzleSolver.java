@@ -8,13 +8,14 @@ package blockpuzzle;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.SwingWorker;
 
 /**
  *
  * @author Kjeld
  */
-public class BlockPuzzleSolver {
-    
+public class BlockPuzzleSolver extends SwingWorker<Void,int[][]>{
+	Point pinNR;
     List<Block> Blocks = new ArrayList<>();
     List<int[]> pinPositions = new ArrayList<>();
     List<int[][]> solutions = new ArrayList<>();
@@ -32,7 +33,7 @@ public class BlockPuzzleSolver {
 //        {0,0,0,0,0,0,0}
 //    };
     
-    public BlockPuzzleSolver(BlockPuzzleFrame frame){
+    public BlockPuzzleSolver(BlockPuzzleFrame frame, Point pinNr){
     	Blocks.add(new Block (new int[][] {{0,1},{0,2},{1,1},{1,2},{1,3},{2,0},{2,1},{2,2}}, 1, 3));        
         Blocks.add(new Block (new int[][] {{0,1},{1,0},{1,1},{1,2},{2,0},{2,1},{2,2}}, 2, 3));        
         Blocks.add(new Block (new int[][] {{0,2},{1,0},{1,1},{1,2},{1,3}}, 3, 3));        
@@ -49,6 +50,7 @@ public class BlockPuzzleSolver {
         pinPositions.add(new int[] {3,4}); pinPositions.add(new int[] {5,1});
         pinPositions.add(new int[] {5,2}); pinPositions.add(new int[] {5,6});
         pinPositions.add(new int[] {6,3});
+        this.pinNR = pinNr;
         this.frame = frame;
     }
     
@@ -57,11 +59,12 @@ public class BlockPuzzleSolver {
      * @param positions
      * @param pinNR 
      */
-    public void placePin(List<int[]> positions, Point pinNR){
+    public Void doInBackground(){
     	int x = pinNR.x, y = pinNR.y;
         int[][] useGrid = grid.clone();
         useGrid[y][x] = 10;
         solve(useGrid.clone(), Blocks, 0);
+        return null;
     }
     
     /**
